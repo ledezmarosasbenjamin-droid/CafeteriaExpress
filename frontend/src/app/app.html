@@ -1,0 +1,225 @@
+<div class="coffee-app">
+  <nav class="navbar" aria-label="Navegación principal">
+    <a class="nav-brand" href="#inicio" aria-label="CoffeeHouse, inicio">
+      <span class="brand-icon" aria-hidden="true">✳</span>
+      <span class="brand-title">coffee<span>house</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#inicio" class="active">Inicio</a></li>
+      <li><a href="#productos">El menú</a></li>
+      <li><a href="#usuarios">Nuestro equipo</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="#productos">Descubre el menú <span aria-hidden="true">↗</span></a>
+  </nav>
+
+  <main>
+    <section id="inicio" class="hero-section">
+      <video
+        class="hero-video"
+        autoplay
+        loop
+        muted
+        [muted]="true"
+        playsinline
+        preload="metadata"
+        poster="https://images.pexels.com/videos/13736673/adult-bar-breakfast-caffeine-13736673.jpeg?auto=compress&cs=tinysrgb&w=1800"
+        aria-hidden="true"
+      >
+        <source src="https://videos.pexels.com/video-files/13736673/13736673-uhd_1440_2560_24fps.mp4" type="video/mp4">
+      </video>
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="eyebrow"><span class="eyebrow-line"></span> Café de origen · Hecho con calma</p>
+        <h1>{{ mensajeInicio.titulo || 'Una pausa que sabe a algo extraordinario.' }}</h1>
+        <p class="hero-copy">
+          {{ mensajeInicio.mensaje || mensajeInicio.subtitulo || 'Café de especialidad, preparado a mano y servido para disfrutar sin apuro.' }}
+        </p>
+        <div class="hero-actions">
+          <a href="#productos" class="btn-primary">Explorar el menú <span aria-hidden="true">↘</span></a>
+          <span class="hero-note"><span class="status-dot"></span> Tostado fresco cada semana</span>
+        </div>
+        <div class="hero-stamp" aria-hidden="true">
+          <span>BUEN CAFÉ</span>
+          <span class="stamp-star">✳</span>
+          <span>BUENOS DÍAS</span>
+        </div>
+      </div>
+      <div class="hero-caption"><span>01 — 03</span><span>Un lugar para volver</span></div>
+    </section>
+
+    <section class="intro-strip" aria-label="Nuestra filosofía">
+      <span>ORIGEN CON PROPÓSITO</span><i aria-hidden="true">✳</i>
+      <span>PREPARADO A MANO</span><i aria-hidden="true">✳</i>
+      <span>DISFRUTADO CONTIGO</span>
+    </section>
+
+    <div *ngIf="errorConexion" class="alert-error" role="alert">
+      <span aria-hidden="true">!</span>{{ errorConexion }}
+    </div>
+
+    <section id="productos" class="section-container menu-section">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span> DE NUESTRA BARRA A TU MESA</p>
+          <h2>Pequeños rituales.<br><em>Grandes cafés.</em></h2>
+        </div>
+        <p class="section-intro">Seleccionamos cada grano por su carácter y lo preparamos para que cada taza tenga algo que contar.</p>
+      </div>
+
+      <div class="productos-grid">
+        <article *ngFor="let prod of productos; let i = index" class="producto-card">
+          <div class="product-image-wrap">
+            <img
+              class="product-image"
+              [src]="productImages[i]"
+              [alt]="'Café de especialidad: ' + prod.nombre"
+              loading="lazy"
+            >
+            <span class="card-badge">{{ i % 2 === 0 ? 'ESPECIALIDAD' : 'ARTESANAL' }}</span>
+            <span class="product-number">0{{ i + 1 }}</span>
+          </div>
+          <div class="card-body">
+            <p class="product-origin">COFFEEHOUSE · SELECCIÓN DE LA CASA</p>
+            <h3>{{ prod.nombre }}</h3>
+            <p class="card-desc">{{ prod.descripcion || 'Preparado al momento con granos seleccionados y mucho cariño.' }}</p>
+            <div class="card-footer">
+              <span class="precio"><small>Bs.</small> {{ prod.precio }}</span>
+              <button type="button" class="btn-card" (click)="agregarPedido(prod.nombre)" [attr.aria-label]="'Pedir ' + prod.nombre">
+                Pedir <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div *ngIf="cargandoProductos" class="loading-state">
+        <div class="spinner"></div>
+        <p>Preparando nuestro menú...</p>
+      </div>
+      <p *ngIf="!cargandoProductos && !errorConexion && productos.length === 0" class="empty-state">
+        Aún no hay productos disponibles. Vuelve pronto para descubrir la selección.
+      </p>
+      <p *ngIf="pedidoAgregado" class="order-toast" role="status" aria-live="polite">
+        <span aria-hidden="true">✓</span> {{ pedidoAgregado }}
+      </p>
+    </section>
+
+    <section class="story-section">
+      <div class="story-image" role="img" aria-label="Barista preparando café de especialidad"></div>
+      <div class="story-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> MÁS QUE UNA TAZA</p>
+        <h2>El buen café<br>se toma <em>sin prisa.</em></h2>
+        <p>Creemos en los buenos granos, en las manos que los preparan y en esos momentos cotidianos que merecen algo especial. Pasa, ponte cómodo y quédate un rato.</p>
+        <a href="#usuarios" class="text-link">Conoce a quienes lo preparan <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section id="usuarios" class="team-section">
+      <div class="section-header team-heading">
+        <div>
+          <p class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span> PERSONAS, NO SOLO TAZAS</p>
+          <h2>Detrás de cada taza,<br><em>hay una historia.</em></h2>
+        </div>
+        <p class="section-intro">Nuestro equipo comparte una misma obsesión: hacer que tu café de todos los días sea un poquito más especial.</p>
+      </div>
+      <div class="team-grid">
+        <article class="team-card">
+          <div class="team-photo team-photo-one" role="img" aria-label="Barista de CoffeeHouse"></div>
+          <div class="team-info"><span>BARISTA PRINCIPAL</span><h3>El arte del espresso</h3><p>Precisión, paciencia y una sonrisa en cada preparación.</p></div>
+        </article>
+        <article class="team-card">
+          <div class="team-photo team-photo-two" role="img" aria-label="Especialista en café"></div>
+          <div class="team-info"><span>ESPECIALISTA DE ORIGEN</span><h3>Un mundo en cada grano</h3><p>Buscamos historias extraordinarias detrás de cada cosecha.</p></div>
+        </article>
+        <article class="team-card">
+          <div class="team-photo team-photo-three" role="img" aria-label="Miembro del equipo CoffeeHouse"></div>
+          <div class="team-info"><span>ANFITRIÓN DE LA CASA</span><h3>Siempre hay sitio</h3><p>La mejor parte del café es compartirlo contigo.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contacto" class="contacto-section">
+      <div class="contacto-inner">
+        <div class="contact-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> NOS ENCANTARÍA SABER DE TI</p>
+          <h2>¿Hablamos<br><em>con un café?</em></h2>
+          <p>Una pregunta, una idea o simplemente ganas de saludar. Nuestra puerta y nuestra bandeja de entrada están abiertas.</p>
+          <div class="contact-detail"><span class="contact-icon" aria-hidden="true">↗</span><span>Nos vemos pronto<br><strong>Cochabamba, Bolivia</strong></span></div>
+        </div>
+        <div class="contacto-card-wrapper">
+          <form class="contact-form" #contactForm="ngForm" (ngSubmit)="enviarContacto(contactForm)">
+            <div class="form-heading"><span>01 / CONTACTO</span><h3>Déjanos un mensaje</h3></div>
+            <div class="form-group">
+              <label for="contact-name">Tu nombre</label>
+              <input id="contact-name" type="text" name="nombre" [(ngModel)]="contacto.nombre" #nombreInput="ngModel" placeholder="¿Cómo te llamas?" required minlength="2" autocomplete="name">
+              <small class="validation-hint">Escribe al menos 2 caracteres.</small>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Correo electrónico</label>
+              <input id="contact-email" type="email" name="email" [(ngModel)]="contacto.email" #emailInput="ngModel" placeholder="tu@correo.com" required email autocomplete="email">
+              <small class="validation-hint">Introduce un correo válido.</small>
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Tu mensaje</label>
+              <textarea id="contact-message" name="mensaje" [(ngModel)]="contacto.mensaje" #mensajeInput="ngModel" rows="4" placeholder="Cuéntanos qué tienes en mente..." required minlength="5"></textarea>
+              <small class="validation-hint">Cuéntanos un poco más (mínimo 5 caracteres).</small>
+            </div>
+            <p *ngIf="errorContacto" class="contact-feedback contact-feedback-error" role="alert">{{ errorContacto }}</p>
+            <button type="submit" class="btn-submit" [disabled]="enviandoContacto || contactForm.invalid">
+              {{ enviandoContacto ? 'Enviando...' : 'Enviar mensaje' }} <span aria-hidden="true">↗</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <div *ngIf="mensajeContactoExito" class="contact-success-toast" role="status" aria-live="polite">
+      <span aria-hidden="true">✓</span>{{ mensajeContactoExito }}
+    </div>
+  </main>
+
+  <footer class="footer">
+    <a class="footer-brand" href="#inicio"><span aria-hidden="true">✳</span> coffeehouse</a>
+    <p>Hecho con cariño y un buen café. © 2026 CoffeeHouse</p>
+    <a href="#inicio" class="back-to-top">Volver arriba ↑</a>
+  </footer>
+
+  <div class="chat-widget">
+    <section *ngIf="chatAbierto" class="chat-window" aria-label="Chat con el barista virtual">
+      <header class="chat-header">
+        <div class="chat-avatar" aria-hidden="true">☕</div>
+        <div class="chat-title"><strong>Barista virtual</strong><span><i class="status-dot"></i> En línea · Gemma 3</span></div>
+        <button type="button" class="chat-close" aria-label="Cerrar chat" (click)="chatAbierto = false">×</button>
+      </header>
+      <div #chatMessages class="chat-messages" aria-live="polite">
+        <div *ngFor="let mensaje of mensajesChat" class="chat-message" [ngClass]="mensaje.role">
+          <span class="message-sender">{{ mensaje.role === 'assistant' ? 'BARISTA' : 'TÚ' }}</span>
+          {{ mensaje.content }}
+        </div>
+        <p *ngIf="cargandoRespuesta && !respuestaEnCurso" class="chat-status"><span class="typing-dots"><i></i><i></i><i></i></span> Conectando con el barista...</p>
+        <div *ngIf="respuestaEnCurso" class="chat-message assistant streaming-response">
+          <span class="message-sender">BARISTA · EN VIVO</span>
+          {{ respuestaEnCurso }}<span class="stream-cursor" aria-hidden="true"></span>
+        </div>
+        <p *ngIf="errorChat" class="chat-error" role="alert">{{ errorChat }}</p>
+      </div>
+      <form class="chat-form" (ngSubmit)="enviarMensaje()">
+        <input
+          type="text"
+          name="mensajeUsuario"
+          [(ngModel)]="mensajeUsuario"
+          placeholder="Escribe tu mensaje..."
+          aria-label="Mensaje para el barista"
+          [disabled]="cargandoRespuesta"
+        >
+        <button type="submit" aria-label="Enviar mensaje" [disabled]="cargandoRespuesta || !mensajeUsuario.trim()">↑</button>
+      </form>
+      <p class="chat-footnote">EL CAFÉ ES MEJOR CUANDO SE COMPARTE</p>
+    </section>
+    <button type="button" class="chat-btn" [attr.aria-expanded]="chatAbierto" (click)="chatAbierto = !chatAbierto">
+      <span class="chat-button-icon" aria-hidden="true">{{ chatAbierto ? '×' : '✳' }}</span>
+      <span>{{ chatAbierto ? 'Cerrar chat' : 'Habla con el barista' }}</span>
+    </button>
+  </div>
+</div>
