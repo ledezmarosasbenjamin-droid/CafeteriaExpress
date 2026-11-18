@@ -1,19 +1,60 @@
 <div class="coffee-app">
-  <nav class="navbar" aria-label="Navegación principal">
-    <a class="nav-brand" href="#inicio" aria-label="CoffeeHouse, inicio">
-      <span class="brand-icon" aria-hidden="true">✳</span>
-      <span class="brand-title">coffee<span>house</span></span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#inicio" class="active">Inicio</a></li>
-      <li><a href="#productos">El menú</a></li>
-      <li><a href="#usuarios">Nuestro equipo</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-    <a class="nav-cta" href="#productos">Descubre el menú <span aria-hidden="true">↗</span></a>
-  </nav>
+  <!-- Barra de Notificación Superior / Estado en Vivo -->
+  <aside class="announcement-bar" aria-label="Información de atención">
+    <div class="announcement-content">
+      <span class="live-pill"><span class="pulse-dot"></span> Abierto Hoy</span>
+      <span class="announcement-text">Atención en sala & delivery continuo de <strong>07:30 a 21:30</strong></span>
+      <span class="announcement-separator">•</span>
+      <span class="announcement-promo">Usa el cupón <strong>COFFEE2026</strong> para 15% OFF en tu orden</span>
+    </div>
+  </aside>
+
+  <!-- Navegación Flotante y Sofisticada -->
+  <header class="navbar-wrapper">
+    <nav class="navbar" aria-label="Navegación principal">
+      <a class="nav-brand" href="#inicio" aria-label="Café de altura, sabor de origen, inicio">
+        <div class="brand-badge-icon" aria-hidden="true">
+          <span>☕</span>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-title">Café de <span>Altura</span></span>
+          <span class="brand-tagline">Sabor de origen</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#inicio" class="active">Inicio</a></li>
+        <li><a href="#quiz">Recomendador</a></li>
+        <li><a href="#productos">El Menú</a></li>
+        <li><a href="#metodos">Extracción</a></li>
+        <li><a href="#usuarios">Baristas</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Botón de Carrito con Contador -->
+        <button
+          type="button"
+          class="btn-nav-cart"
+          (click)="toggleCarrito()"
+          [attr.aria-expanded]="carritoAbierto"
+          aria-label="Abrir carrito de pedidos"
+        >
+          <span class="cart-icon">🛒</span>
+          <span class="cart-text">Pedido</span>
+          <span class="cart-badge" *ngIf="cantidadTotalCarrito > 0">{{ cantidadTotalCarrito }}</span>
+        </button>
+
+        <a class="nav-cta" href="#productos">
+          <span>Explorar Menú</span>
+          <span class="cta-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </nav>
+  </header>
 
   <main>
+    <!-- HERO SECTION -->
     <section id="inicio" class="hero-section">
       <video
         class="hero-video"
@@ -28,198 +69,1084 @@
       >
         <source src="https://videos.pexels.com/video-files/13736673/13736673-uhd_1440_2560_24fps.mp4" type="video/mp4">
       </video>
+      <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero-grain" aria-hidden="true"></div>
+
       <div class="hero-content">
-        <p class="eyebrow"><span class="eyebrow-line"></span> Café de origen · Hecho con calma</p>
-        <h1>{{ mensajeInicio.titulo || 'Una pausa que sabe a algo extraordinario.' }}</h1>
-        <p class="hero-copy">
-          {{ mensajeInicio.mensaje || mensajeInicio.subtitulo || 'Café de especialidad, preparado a mano y servido para disfrutar sin apuro.' }}
-        </p>
-        <div class="hero-actions">
-          <a href="#productos" class="btn-primary">Explorar el menú <span aria-hidden="true">↘</span></a>
-          <span class="hero-note"><span class="status-dot"></span> Tostado fresco cada semana</span>
+        <div class="hero-tag">
+          <span class="tag-spark">✦</span>
+          <span>CAFÉ DE ESPECIALIDAD · ORIGEN BOLIVIANO</span>
         </div>
-        <div class="hero-stamp" aria-hidden="true">
-          <span>BUEN CAFÉ</span>
-          <span class="stamp-star">✳</span>
-          <span>BUENOS DÍAS</span>
+
+        <h1>{{ mensajeInicio.titulo || 'Café de altura, sabor de origen' }}</h1>
+
+        <p class="hero-copy">
+          {{ mensajeInicio.mensaje || mensajeInicio.subtitulo || 'Una pausa que sabe a algo extraordinario. Granos seleccionados de altura, tostados en pequeños lotes y extraídos con maestría.' }}
+        </p>
+
+        <div class="hero-actions">
+          <a href="#productos" class="btn-primary">
+            <span>Ver la carta</span>
+            <span class="btn-arrow" aria-hidden="true">↘</span>
+          </a>
+          <a href="#quiz" class="btn-secondary">
+            <span>✦ Descubre tu café ideal</span>
+          </a>
+        </div>
+
+        <!-- Estadísticas Rápidas -->
+        <div class="hero-stats-row">
+          <div class="stat-item">
+            <span class="stat-number">+15k</span>
+            <span class="stat-label">Tazas Servidas</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">88.5</span>
+            <span class="stat-label">Puntaje Q-Grader</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Tueste Fresco</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">4.9 ★</span>
+            <span class="stat-label">Clientes Felices</span>
+          </div>
         </div>
       </div>
-      <div class="hero-caption"><span>01 — 03</span><span>Un lugar para volver</span></div>
+
+      <div class="hero-floating-card" aria-hidden="true">
+        <div class="floating-card-icon">☕</div>
+        <div class="floating-card-body">
+          <strong>Café del Día</strong>
+          <span>Caranavi Typica · Notas de miel & jazmín</span>
+        </div>
+      </div>
     </section>
 
-    <section class="intro-strip" aria-label="Nuestra filosofía">
-      <span>ORIGEN CON PROPÓSITO</span><i aria-hidden="true">✳</i>
-      <span>PREPARADO A MANO</span><i aria-hidden="true">✳</i>
-      <span>DISFRUTADO CONTIGO</span>
+    <!-- INTRO MARQUEE STRIP -->
+    <section class="ticker-strip" aria-label="Valores del café">
+      <div class="ticker-track">
+        <span>ORIGEN CON PROPÓSITO</span><i aria-hidden="true">✦</i>
+        <span>GRANOS SELECCIONADOS A MANO</span><i aria-hidden="true">✦</i>
+        <span>MICRO-TUESTE SEMANAL</span><i aria-hidden="true">✦</i>
+        <span>BARISTAS CERTIFICADOS</span><i aria-hidden="true">✦</i>
+        <span>PASTELERÍA ARTESANAL HORNEADA HOY</span><i aria-hidden="true">✦</i>
+        <span>DISFRUTADO SIN PRISA</span><i aria-hidden="true">✦</i>
+      </div>
     </section>
 
-    <div *ngIf="errorConexion" class="alert-error" role="alert">
-      <span aria-hidden="true">!</span>{{ errorConexion }}
-    </div>
+    <!-- RECOMENDADOR INTERACTIVO / COFFEE MATCHER -->
+    <section id="quiz" class="quiz-section">
+      <div class="section-container">
+        <div class="quiz-box">
+          <div class="quiz-header">
+            <div class="eyebrow eyebrow-accent">
+              <span class="eyebrow-line"></span> ASISTENTE INTERACTIVO
+            </div>
+            <h2>¿Qué café se adapta a <em>tu momento hoy?</em></h2>
+            <p>Responde en 2 clics y descubre la taza perfecta creada para tu estado de ánimo.</p>
+          </div>
 
+          <div class="quiz-steps">
+            <!-- Paso 1 -->
+            <div class="quiz-step-block">
+              <span class="step-badge">Paso 1 · Tu Mood</span>
+              <h4>¿Cómo te sientes o qué necesitas?</h4>
+              <div class="quiz-options">
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizMood === 'Energia'"
+                  (click)="seleccionarQuizMood('Energia')"
+                >
+                  <span class="option-icon">⚡</span>
+                  <span class="option-title">Máxima Energía</span>
+                  <small>Para trabajar o estudiar</small>
+                </button>
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizMood === 'Calma'"
+                  (click)="seleccionarQuizMood('Calma')"
+                >
+                  <span class="option-icon">🧘</span>
+                  <span class="option-title">Momento Tranquilo</span>
+                  <small>Disfrutar una lectura</small>
+                </button>
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizMood === 'Antojo'"
+                  (click)="seleccionarQuizMood('Antojo')"
+                >
+                  <span class="option-icon">🍬</span>
+                  <span class="option-title">Un Gusto Dulce</span>
+                  <small>Reconfortante y cremoso</small>
+                </button>
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizMood === 'Refrescante'"
+                  (click)="seleccionarQuizMood('Refrescante')"
+                >
+                  <span class="option-icon">❄️</span>
+                  <span class="option-title">Refrescante</span>
+                  <small>Para un día soleado</small>
+                </button>
+              </div>
+            </div>
+
+            <!-- Paso 2 -->
+            <div class="quiz-step-block" *ngIf="quizMood">
+              <span class="step-badge">Paso 2 · Tu Preferencia</span>
+              <h4>¿Cómo prefieres tomarlo?</h4>
+              <div class="quiz-options">
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizPreferencia === 'Intenso'"
+                  (click)="seleccionarQuizPreferencia('Intenso')"
+                >
+                  <span class="option-icon">☕</span>
+                  <span class="option-title">Solo e Intenso</span>
+                  <small>Puro café de origen</small>
+                </button>
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizPreferencia === 'Leche'"
+                  (click)="seleccionarQuizPreferencia('Leche')"
+                >
+                  <span class="option-icon">🥛</span>
+                  <span class="option-title">Sedoso con Leche</span>
+                  <small>Microespuma perfecta</small>
+                </button>
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizPreferencia === 'Dulce'"
+                  (click)="seleccionarQuizPreferencia('Dulce')"
+                >
+                  <span class="option-icon">🍯</span>
+                  <span class="option-title">Toque Dulce / Cacao</span>
+                  <small>Caramelo o chocolate</small>
+                </button>
+                <button
+                  type="button"
+                  class="btn-quiz-option"
+                  [class.active]="quizPreferencia === 'Frio'"
+                  (click)="seleccionarQuizPreferencia('Frio')"
+                >
+                  <span class="option-icon">🧊</span>
+                  <span class="option-title">En Las Rocas</span>
+                  <small>Cold brew o frappé</small>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resultado del Quiz -->
+          <div class="quiz-result-card" *ngIf="quizResultado">
+            <div class="result-badge">✦ RECOMENDACIÓN ESPECIAL PARA TI</div>
+            <div class="result-body">
+              <img [src]="quizResultado.imagen || obtenerImagenProducto(quizResultado.id)" [alt]="quizResultado.nombre" class="result-thumb">
+              <div class="result-info">
+                <h3>{{ quizResultado.nombre }}</h3>
+                <p>{{ quizResultado.descripcion }}</p>
+                <div class="result-tags">
+                  <span class="pill-tag">Bs. {{ quizResultado.precio }}</span>
+                  <span class="pill-tag" *ngFor="let nota of quizResultado.notasCata">{{ nota }}</span>
+                </div>
+              </div>
+              <div class="result-action">
+                <button type="button" class="btn-primary" (click)="agregarPedido(quizResultado.nombre)">
+                  <span>Pedir ahora</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+                <button type="button" class="btn-reset-quiz" (click)="reiniciarQuiz()">Probar otro</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENÚ Y CATÁLOGO DE PRODUCTOS -->
     <section id="productos" class="section-container menu-section">
       <div class="section-header">
         <div>
-          <p class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span> DE NUESTRA BARRA A TU MESA</p>
+          <div class="eyebrow eyebrow-dark">
+            <span class="eyebrow-line"></span> CARTA DE ESPECIALIDAD & REPOSTERÍA
+          </div>
           <h2>Pequeños rituales.<br><em>Grandes cafés.</em></h2>
         </div>
-        <p class="section-intro">Seleccionamos cada grano por su carácter y lo preparamos para que cada taza tenga algo que contar.</p>
+        <p class="section-intro">
+          Seleccionamos cada lote de café por su perfil de taza y tostamos semanalmente para garantizar un aroma inigualable.
+        </p>
       </div>
 
+      <!-- Barra de Filtros, Búsqueda y Ordenamiento Interactivos -->
+      <div class="menu-controls-bar">
+        <div class="category-tabs" role="tablist">
+          <button
+            type="button"
+            *ngFor="let cat of categorias"
+            class="tab-btn"
+            [class.active]="categoriaSeleccionada === cat"
+            (click)="seleccionarCategoria(cat)"
+            role="tab"
+          >
+            <span *ngIf="cat === 'Todos'">✨</span>
+            <span *ngIf="cat === 'Calientes'">☕</span>
+            <span *ngIf="cat === 'Fríos'">🧊</span>
+            <span *ngIf="cat === 'Repostería'">🥐</span>
+            <span *ngIf="cat === 'Favoritos'">❤️</span>
+            {{ cat }}
+            <span class="tab-count" *ngIf="cat === 'Favoritos'">({{ favoritos.size }})</span>
+          </button>
+        </div>
+
+        <div class="search-sort-group">
+          <!-- Buscador en tiempo real -->
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input
+              type="text"
+              [(ngModel)]="terminoBusqueda"
+              placeholder="Buscar por café, ingrediente..."
+              aria-label="Buscar productos en el menú"
+            >
+            <button
+              *ngIf="terminoBusqueda"
+              type="button"
+              class="search-clear"
+              (click)="terminoBusqueda = ''"
+              aria-label="Limpiar búsqueda"
+            >×</button>
+          </div>
+
+          <!-- Selector de Orden -->
+          <div class="sort-select-wrapper">
+            <select [(ngModel)]="criterioOrden" aria-label="Ordenar productos">
+              <option value="default">Orden recomendado</option>
+              <option value="precio-asc">Precio: Menor a Mayor</option>
+              <option value="precio-desc">Precio: Mayor a Menor</option>
+              <option value="nombre">Alfabético (A-Z)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID DE PRODUCTOS -->
       <div class="productos-grid">
-        <article *ngFor="let prod of productos; let i = index" class="producto-card">
+        <article
+          *ngFor="let prod of productosFiltrados; let i = index"
+          class="producto-card"
+          [class.card-featured]="prod.popular"
+        >
+          <!-- Contenedor de Imagen y Badges -->
           <div class="product-image-wrap">
             <img
               class="product-image"
-              [src]="productImages[i]"
+              [src]="prod.imagen || obtenerImagenProducto(prod)"
               [alt]="'Café de especialidad: ' + prod.nombre"
+              (error)="onImageError($event)"
               loading="lazy"
             >
-            <span class="card-badge">{{ i % 2 === 0 ? 'ESPECIALIDAD' : 'ARTESANAL' }}</span>
+            <div class="card-badges-top">
+              <span class="card-badge" [class.badge-gold]="prod.popular">
+                {{ prod.popular ? '★ DESTACADO' : (prod.categoria ? prod.categoria.toUpperCase() : 'ESPECIALIDAD') }}
+              </span>
+              <!-- Botón Favorito Interactivo -->
+              <button
+                type="button"
+                class="btn-fav"
+                [class.favorited]="esFavorito(prod.id)"
+                (click)="toggleFavorito(prod.id, $event)"
+                [attr.aria-label]="esFavorito(prod.id) ? 'Quitar de favoritos' : 'Guardar en favoritos'"
+              >
+                <span class="fav-heart">{{ esFavorito(prod.id) ? '❤️' : '🤍' }}</span>
+              </button>
+            </div>
+
+            <!-- Indicador de Intensidad de Tueste -->
+            <div class="product-intensity-bar" *ngIf="prod.intensidad" [title]="'Nivel de intensidad: ' + prod.intensidad + '/5'">
+              <span class="intensity-label">Intensidad</span>
+              <div class="intensity-dots">
+                <span *ngFor="let d of [1,2,3,4,5]" [class.filled]="d <= (prod.intensidad || 3)">●</span>
+              </div>
+            </div>
+
             <span class="product-number">0{{ i + 1 }}</span>
           </div>
+
+          <!-- Cuerpo de la Tarjeta -->
           <div class="card-body">
-            <p class="product-origin">COFFEEHOUSE · SELECCIÓN DE LA CASA</p>
+            <div class="card-header-origin">
+              <span class="product-origin">{{ prod.origen || 'CAFÉ DE ALTURA · SABOR DE ORIGEN' }}</span>
+            </div>
+
             <h3>{{ prod.nombre }}</h3>
-            <p class="card-desc">{{ prod.descripcion || 'Preparado al momento con granos seleccionados y mucho cariño.' }}</p>
+
+            <p class="card-desc">
+              {{ prod.descripcion || 'Preparado al momento con granos seleccionados y mucho cariño.' }}
+            </p>
+
+            <!-- Notas de Cata -->
+            <div class="card-notes-pills" *ngIf="prod.notasCata && prod.notasCata.length">
+              <span class="note-pill" *ngFor="let nota of prod.notasCata">{{ nota }}</span>
+            </div>
+
+            <!-- Footer con Precio y Botones de Acción -->
             <div class="card-footer">
-              <span class="precio"><small>Bs.</small> {{ prod.precio }}</span>
-              <button type="button" class="btn-card" (click)="agregarPedido(prod.nombre)" [attr.aria-label]="'Pedir ' + prod.nombre">
-                Pedir <span aria-hidden="true">↗</span>
-              </button>
+              <div class="price-block">
+                <span class="precio"><small>Bs.</small> {{ prod.precio }}</span>
+              </div>
+
+              <div class="card-actions-row">
+                <button
+                  type="button"
+                  class="btn-quick-view"
+                  (click)="abrirDetalle(prod)"
+                  title="Personalizar tamaño y leche"
+                >
+                  Personalizar
+                </button>
+                <button
+                  type="button"
+                  class="btn-card"
+                  (click)="agregarPedido(prod.nombre)"
+                  [attr.aria-label]="'Pedir ' + prod.nombre"
+                >
+                  <span>Pedir</span>
+                  <span class="btn-card-arrow" aria-hidden="true">↗</span>
+                </button>
+              </div>
             </div>
           </div>
         </article>
       </div>
 
+      <!-- Estados de Carga y Sin Resultados -->
       <div *ngIf="cargandoProductos" class="loading-state">
         <div class="spinner"></div>
-        <p>Preparando nuestro menú...</p>
+        <p>Extrayendo los mejores aromas del menú...</p>
       </div>
-      <p *ngIf="!cargandoProductos && !errorConexion && productos.length === 0" class="empty-state">
-        Aún no hay productos disponibles. Vuelve pronto para descubrir la selección.
-      </p>
-      <p *ngIf="pedidoAgregado" class="order-toast" role="status" aria-live="polite">
-        <span aria-hidden="true">✓</span> {{ pedidoAgregado }}
-      </p>
+
+      <div *ngIf="!cargandoProductos && productosFiltrados.length === 0" class="empty-state">
+        <span class="empty-icon">☕</span>
+        <h4>No encontramos productos con ese filtro</h4>
+        <p>Intenta con otra palabra clave o limpia el buscador para ver toda la carta.</p>
+        <button type="button" class="btn-clear-filter" (click)="terminoBusqueda = ''; categoriaSeleccionada = 'Todos'">
+          Ver todo el menú
+        </button>
+      </div>
+
+      <!-- Notificación flotante de Pedido Añadido -->
+      <aside *ngIf="pedidoAgregado" class="order-toast" role="status" aria-live="polite">
+        <span class="toast-check" aria-hidden="true">✓</span>
+        <div class="toast-text">
+          <strong>¡Añadido al pedido!</strong>
+          <span>{{ pedidoAgregado }}</span>
+        </div>
+        <button type="button" class="toast-action" (click)="toggleCarrito()">Ver carrito →</button>
+      </aside>
     </section>
 
+    <!-- MÉTODOS DE EXTRACCIÓN (INTERACTIVO) -->
+    <section id="metodos" class="methods-section">
+      <div class="section-container">
+        <div class="section-header section-header-light">
+          <div>
+            <div class="eyebrow eyebrow-cream">
+              <span class="eyebrow-line"></span> CIENCIA & ARTE
+            </div>
+            <h2>Elige tu método<br><em>de preparación favorito.</em></h2>
+          </div>
+          <p class="section-intro light-intro">
+            Cada método resalta notas y matices únicos del grano: desde la crema aterciopelada del espresso hasta la pureza cristalina del filtrado.
+          </p>
+        </div>
+
+        <div class="methods-interactive-grid">
+          <div class="methods-nav-list" role="tablist">
+            <button
+              type="button"
+              *ngFor="let m of metodosExtraccion; let idx = index"
+              class="method-tab-item"
+              [class.active]="metodoActivoIndex === idx"
+              (click)="seleccionarMetodo(idx)"
+              role="tab"
+            >
+              <span class="method-tab-icon">{{ m.icono }}</span>
+              <div class="method-tab-info">
+                <strong>{{ m.nombre }}</strong>
+                <small>{{ m.tiempo }}</small>
+              </div>
+              <span class="method-tab-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="method-display-card">
+            <div class="method-display-header">
+              <span class="method-badge">✦ PERFIL DE EXTRACCIÓN</span>
+              <span class="method-time-tag">⏱ Tiempo óptimo: {{ metodosExtraccion[metodoActivoIndex].tiempo }}</span>
+            </div>
+            <h3>{{ metodosExtraccion[metodoActivoIndex].nombre }}</h3>
+            <p class="method-lead">{{ metodosExtraccion[metodoActivoIndex].perfil }}</p>
+            <p class="method-detail">{{ metodosExtraccion[metodoActivoIndex].descripcion }}</p>
+
+            <div class="method-card-footer">
+              <span class="barista-quote">«Nuestra molienda se calibra cada mañana con refractómetro digital.»</span>
+              <a href="#productos" class="btn-primary btn-sm">
+                <span>Probar este método</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY SECTION -->
     <section class="story-section">
-      <div class="story-image" role="img" aria-label="Barista preparando café de especialidad"></div>
+      <div class="story-image" role="img" aria-label="Barista preparando café de especialidad">
+        <div class="story-stamp">
+          <span class="stamp-roast">TUESTES ARTESANALES</span>
+          <span class="stamp-star">★</span>
+          <span class="stamp-year">DESDE 2020</span>
+        </div>
+      </div>
       <div class="story-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> MÁS QUE UNA TAZA</p>
+        <div class="eyebrow">
+          <span class="eyebrow-line"></span> NUESTRA FILOSOFÍA
+        </div>
         <h2>El buen café<br>se toma <em>sin prisa.</em></h2>
-        <p>Creemos en los buenos granos, en las manos que los preparan y en esos momentos cotidianos que merecen algo especial. Pasa, ponte cómodo y quédate un rato.</p>
+        <p>
+          En Café de altura, sabor de origen creemos en el comercio justo, en la relación directa con productores de Caranavi y Cochabamba, y en honrar el esfuerzo de cada recolector en cada taza que servimos.
+        </p>
+        <p>
+          Un espacio diseñado para conectar, conversar o simplemente saborear un espresso en silencio con música elegida al detalle.
+        </p>
+        <div class="story-badges">
+          <div class="story-badge-item">
+            <span class="badge-icon">🌱</span>
+            <span>100% Granos de sombra y comercio ético</span>
+          </div>
+          <div class="story-badge-item">
+            <span class="badge-icon">🥛</span>
+            <span>Opciones con leches vegetales de avena & almendra</span>
+          </div>
+        </div>
         <a href="#usuarios" class="text-link">Conoce a quienes lo preparan <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
+    <!-- NUESTRO EQUIPO DE BARISTAS -->
     <section id="usuarios" class="team-section">
       <div class="section-header team-heading">
         <div>
-          <p class="eyebrow eyebrow-dark"><span class="eyebrow-line"></span> PERSONAS, NO SOLO TAZAS</p>
-          <h2>Detrás de cada taza,<br><em>hay una historia.</em></h2>
+          <div class="eyebrow eyebrow-dark">
+            <span class="eyebrow-line"></span> PERSONAS DETRÁS DE LA BARRA
+          </div>
+          <h2>Maestría y pasión<br><em>en cada preparación.</em></h2>
         </div>
-        <p class="section-intro">Nuestro equipo comparte una misma obsesión: hacer que tu café de todos los días sea un poquito más especial.</p>
+        <p class="section-intro">
+          Nuestro equipo comparte una misma obsesión: hacer que tu ritual de café diario sea una experiencia memorable.
+        </p>
       </div>
+
       <div class="team-grid">
         <article class="team-card">
-          <div class="team-photo team-photo-one" role="img" aria-label="Barista de CoffeeHouse"></div>
-          <div class="team-info"><span>BARISTA PRINCIPAL</span><h3>El arte del espresso</h3><p>Precisión, paciencia y una sonrisa en cada preparación.</p></div>
+          <div class="team-photo">
+            <img
+              src="/team/valentina.jpg"
+              alt="Valentina Morales - Barista Principal"
+              class="team-img"
+              style="object-position: center 20%;"
+              loading="lazy"
+            >
+            <span class="team-badge">HEAD BARISTA</span>
+          </div>
+          <div class="team-info">
+            <span class="team-role">ESPECIALISTA EN ESPRESSO & LATTE ART</span>
+            <h3>Valentina Morales</h3>
+            <p>Campeona departamental de barismo 2024. Cuida la temperatura, calibración y emulsión exacta en cada taza.</p>
+          </div>
         </article>
+
         <article class="team-card">
-          <div class="team-photo team-photo-two" role="img" aria-label="Especialista en café"></div>
-          <div class="team-info"><span>ESPECIALISTA DE ORIGEN</span><h3>Un mundo en cada grano</h3><p>Buscamos historias extraordinarias detrás de cada cosecha.</p></div>
+          <div class="team-photo">
+            <img
+              src="/team/mateo.jpg"
+              alt="Mateo Quiroga - Q-Grader y Tostador"
+              class="team-img"
+              style="object-position: center 20%;"
+              loading="lazy"
+            >
+            <span class="team-badge">Q-GRADER</span>
+          </div>
+          <div class="team-info">
+            <span class="team-role">ESPECIALISTA DE ORIGEN & TUESTE</span>
+            <h3>Mateo Quiroga</h3>
+            <p>Selecciona las cosechas en fincas de altura y define las curvas térmicas para resaltar notas florales y frutales.</p>
+          </div>
         </article>
+
         <article class="team-card">
-          <div class="team-photo team-photo-three" role="img" aria-label="Miembro del equipo CoffeeHouse"></div>
-          <div class="team-info"><span>ANFITRIÓN DE LA CASA</span><h3>Siempre hay sitio</h3><p>La mejor parte del café es compartirlo contigo.</p></div>
+          <div class="team-photo">
+            <img
+              src="/team/camila.jpg"
+              alt="Camila Rojas - Anfitriona y Repostera"
+              class="team-img"
+              style="object-position: center 15%;"
+              loading="lazy"
+            >
+            <span class="team-badge">HOSPITALIDAD</span>
+          </div>
+          <div class="team-info">
+            <span class="team-role">ANFITRIONA & REPOSTERA</span>
+            <h3>Camila Rojas</h3>
+            <p>Hornea los croissants artesanalmente cada madrugada y asegura que encuentres el rincón perfecto para tu descanso.</p>
+          </div>
         </article>
       </div>
     </section>
 
+    <!-- TESTIMONIOS Y RESEÑAS INTERACTIVAS -->
+    <section class="testimonials-section">
+      <div class="section-container">
+        <div class="testimonials-wrapper">
+          <div class="eyebrow eyebrow-accent">
+            <span class="eyebrow-line"></span> EXPERIENCIA DE NUESTRA COMUNIDAD
+          </div>
+          <h2>Lo que dicen quienes nos visitan</h2>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <span *ngFor="let s of [1,2,3,4,5]">★</span>
+            </div>
+            <p class="testimonial-text">
+              "{{ testimonios[testimonioActivo].comentario }}"
+            </p>
+            <div class="testimonial-author">
+              <img [src]="testimonios[testimonioActivo].avatar" [alt]="testimonios[testimonioActivo].nombre" class="author-avatar">
+              <div class="author-details">
+                <strong>{{ testimonios[testimonioActivo].nombre }}</strong>
+                <span>{{ testimonios[testimonioActivo].rol }} · {{ testimonios[testimonioActivo].fecha }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-nav">
+            <button type="button" class="btn-circle" (click)="anteriorTestimonio()" aria-label="Testimonio anterior">←</button>
+            <div class="testimonial-dots">
+              <span
+                *ngFor="let t of testimonios; let i = index"
+                class="t-dot"
+                [class.active]="testimonioActivo === i"
+                (click)="testimonioActivo = i"
+              ></span>
+            </div>
+            <button type="button" class="btn-circle" (click)="siguienteTestimonio()" aria-label="Siguiente testimonio">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO Y UBICACIÓN -->
     <section id="contacto" class="contacto-section">
       <div class="contacto-inner">
         <div class="contact-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> NOS ENCANTARÍA SABER DE TI</p>
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span> ESTAMOS PARA ESCUCHARTE
+          </div>
           <h2>¿Hablamos<br><em>con un café?</em></h2>
-          <p>Una pregunta, una idea o simplemente ganas de saludar. Nuestra puerta y nuestra bandeja de entrada están abiertas.</p>
-          <div class="contact-detail"><span class="contact-icon" aria-hidden="true">↗</span><span>Nos vemos pronto<br><strong>Cochabamba, Bolivia</strong></span></div>
+          <p>
+            Una reserva para tu equipo, catering de especialidad, eventos privados o simplemente ganas de saludarnos. Nuestra barra te espera.
+          </p>
+
+          <div class="contact-cards-info">
+            <div class="contact-info-pill">
+              <span class="c-icon">📍</span>
+              <div>
+                <strong>Nuestra Ubicación</strong>
+                <span>Av. América & Potosí, Cochabamba, Bolivia</span>
+              </div>
+            </div>
+            <div class="contact-info-pill">
+              <span class="c-icon">⏰</span>
+              <div>
+                <strong>Horario de Atención</strong>
+                <span>Lunes a Domingo · 07:30 a 21:30</span>
+              </div>
+            </div>
+            <div class="contact-info-pill">
+              <span class="c-icon">💬</span>
+              <div>
+                <strong>WhatsApp Directo</strong>
+                <span>+591 700 00000 · Pedidos y reservas</span>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="contacto-card-wrapper">
           <form class="contact-form" #contactForm="ngForm" (ngSubmit)="enviarContacto(contactForm)">
-            <div class="form-heading"><span>01 / CONTACTO</span><h3>Déjanos un mensaje</h3></div>
+            <div class="form-heading">
+              <span>01 / ENVÍANOS UN MENSAJE</span>
+              <h3>Conversemos</h3>
+              <p>Te responderemos en menos de 2 horas hábiles.</p>
+            </div>
+
+            <!-- Selector de Motivo Interactivo -->
             <div class="form-group">
-              <label for="contact-name">Tu nombre</label>
-              <input id="contact-name" type="text" name="nombre" [(ngModel)]="contacto.nombre" #nombreInput="ngModel" placeholder="¿Cómo te llamas?" required minlength="2" autocomplete="name">
+              <label>Motivo de contacto</label>
+              <div class="motivos-selector">
+                <button
+                  type="button"
+                  *ngFor="let mot of ['Consulta general', 'Reserva de mesa', 'Eventos & Catering']"
+                  class="btn-motivo"
+                  [class.active]="motivoContacto === mot"
+                  (click)="motivoContacto = mot"
+                >
+                  {{ mot }}
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-name">Tu nombre y apellido</label>
+              <input
+                id="contact-name"
+                type="text"
+                name="nombre"
+                [(ngModel)]="contacto.nombre"
+                #nombreInput="ngModel"
+                placeholder="Ej. Andrés Morales"
+                required
+                minlength="2"
+                autocomplete="name"
+              >
               <small class="validation-hint">Escribe al menos 2 caracteres.</small>
             </div>
+
             <div class="form-group">
               <label for="contact-email">Correo electrónico</label>
-              <input id="contact-email" type="email" name="email" [(ngModel)]="contacto.email" #emailInput="ngModel" placeholder="tu@correo.com" required email autocomplete="email">
+              <input
+                id="contact-email"
+                type="email"
+                name="email"
+                [(ngModel)]="contacto.email"
+                #emailInput="ngModel"
+                placeholder="tu@correo.com"
+                required
+                email
+                autocomplete="email"
+              >
               <small class="validation-hint">Introduce un correo válido.</small>
             </div>
+
             <div class="form-group">
-              <label for="contact-message">Tu mensaje</label>
-              <textarea id="contact-message" name="mensaje" [(ngModel)]="contacto.mensaje" #mensajeInput="ngModel" rows="4" placeholder="Cuéntanos qué tienes en mente..." required minlength="5"></textarea>
+              <label for="contact-message">Tu mensaje o pedido especial</label>
+              <textarea
+                id="contact-message"
+                name="mensaje"
+                [(ngModel)]="contacto.mensaje"
+                #mensajeInput="ngModel"
+                rows="4"
+                placeholder="Cuéntanos en qué podemos servirte..."
+                required
+                minlength="5"
+              ></textarea>
               <small class="validation-hint">Cuéntanos un poco más (mínimo 5 caracteres).</small>
             </div>
-            <p *ngIf="errorContacto" class="contact-feedback contact-feedback-error" role="alert">{{ errorContacto }}</p>
+
+            <p *ngIf="errorContacto" class="contact-feedback contact-feedback-error" role="alert">
+              {{ errorContacto }}
+            </p>
+
             <button type="submit" class="btn-submit" [disabled]="enviandoContacto || contactForm.invalid">
-              {{ enviandoContacto ? 'Enviando...' : 'Enviar mensaje' }} <span aria-hidden="true">↗</span>
+              <span>{{ enviandoContacto ? 'Enviando mensaje...' : 'Enviar Mensaje' }}</span>
+              <span aria-hidden="true">↗</span>
             </button>
           </form>
         </div>
       </div>
     </section>
 
-    <div *ngIf="mensajeContactoExito" class="contact-success-toast" role="status" aria-live="polite">
-      <span aria-hidden="true">✓</span>{{ mensajeContactoExito }}
-    </div>
+    <!-- TOAST DE CONTACTO EXITOSO -->
+    <aside *ngIf="mensajeContactoExito" class="contact-success-toast" role="status" aria-live="polite">
+      <span aria-hidden="true">✓</span>
+      <div>
+        <strong>¡Mensaje Recibido!</strong>
+        <p>{{ mensajeContactoExito }}</p>
+      </div>
+    </aside>
   </main>
 
+  <!-- FOOTER ELEGANTE -->
   <footer class="footer">
-    <a class="footer-brand" href="#inicio"><span aria-hidden="true">✳</span> coffeehouse</a>
-    <p>Hecho con cariño y un buen café. © 2026 CoffeeHouse</p>
-    <a href="#inicio" class="back-to-top">Volver arriba ↑</a>
+    <div class="footer-top">
+      <div class="footer-col-brand">
+        <a class="footer-brand" href="#inicio">
+          <span class="footer-logo-icon">☕</span>
+          <span>Café de Altura</span>
+        </a>
+        <p>Café de altura, sabor de origen. Boutique de especialidad y tostaduría artesanal. Hecho con pasión por el café boliviano.</p>
+      </div>
+
+      <div class="footer-col-links">
+        <strong>Explorar</strong>
+        <a href="#inicio">Inicio</a>
+        <a href="#quiz">Recomendador</a>
+        <a href="#productos">Menú Completo</a>
+        <a href="#metodos">Métodos de Extracción</a>
+      </div>
+
+      <div class="footer-col-links">
+        <strong>Comunidad</strong>
+        <a href="#usuarios">Maestros Baristas</a>
+        <a href="#contacto">Contacto & Reservas</a>
+        <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+        <a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
+      </div>
+
+      <div class="footer-col-links">
+        <strong>Atención</strong>
+        <span>Lun - Dom: 07:30 - 21:30</span>
+        <span>Cochabamba, Bolivia</span>
+        <button type="button" class="footer-chat-trigger" (click)="chatAbierto = true">
+          Hablar con Barista Virtual 💬
+        </button>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Café de altura, sabor de origen. Todos los derechos reservados.</p>
+      <a href="#inicio" class="back-to-top">Volver al inicio ↑</a>
+    </div>
   </footer>
 
+  <!-- ============================================== -->
+  <!-- MODAL: DETALLE / PERSONALIZAR CAFÉ -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" *ngIf="modalDetalleAbierto" (click)="cerrarDetalle()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+      <button type="button" class="modal-close-btn" (click)="cerrarDetalle()" aria-label="Cerrar modal">×</button>
+
+      <div class="modal-product-layout" *ngIf="productoDetalle">
+        <div class="modal-product-img">
+          <img [src]="productoDetalle.imagen || obtenerImagenProducto(productoDetalle.id)" [alt]="productoDetalle.nombre">
+          <span class="modal-badge">{{ productoDetalle.categoria || 'ESPECIALIDAD' }}</span>
+        </div>
+
+        <div class="modal-product-details">
+          <span class="modal-origin">{{ productoDetalle.origen || 'Origen Seleccionado' }}</span>
+          <h2>{{ productoDetalle.nombre }}</h2>
+          <p class="modal-desc">{{ productoDetalle.descripcion }}</p>
+
+          <!-- Selector de Tamaño -->
+          <div class="custom-field">
+            <label>Tamaño de taza</label>
+            <div class="custom-options-row">
+              <button
+                type="button"
+                *ngFor="let t of ['Chico (8 oz)', 'Mediano (12 oz)', 'Grande (16 oz)']"
+                class="btn-chip"
+                [class.active]="detalleTamano === t"
+                (click)="detalleTamano = t"
+              >
+                {{ t }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Selector de Leche -->
+          <div class="custom-field">
+            <label>Tipo de leche</label>
+            <div class="custom-options-row">
+              <button
+                type="button"
+                *ngFor="let l of ['Entera', 'Deslactosada', 'Leche de Avena (+3 Bs.)', 'Leche Almendras (+3 Bs.)']"
+                class="btn-chip"
+                [class.active]="detalleLeche === l"
+                (click)="detalleLeche = l"
+              >
+                {{ l }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Notas al barista -->
+          <div class="custom-field">
+            <label for="modal-notes">Indicación especial para el barista</label>
+            <input
+              id="modal-notes"
+              type="text"
+              [(ngModel)]="detalleNotas"
+              placeholder="Ej. sin azúcar, extra caliente, canela encima..."
+            >
+          </div>
+
+          <!-- Cantidad y Botón de Agregar -->
+          <div class="modal-actions-bar">
+            <div class="qty-counter">
+              <button type="button" (click)="decrementarCantidadDetalle()">-</button>
+              <span>{{ detalleCantidad }}</span>
+              <button type="button" (click)="incrementarCantidadDetalle()">+</button>
+            </div>
+
+            <button type="button" class="btn-primary" (click)="agregarDesdeDetalle()">
+              <span>Añadir a mi pedido</span>
+              <span class="modal-price">Bs. {{ precioDetalleTotal }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- DRAWER / PANEL LATERAL DE CARRITO DE COMPRAS -->
+  <!-- ============================================== -->
+  <div class="cart-drawer-overlay" *ngIf="carritoAbierto" (click)="toggleCarrito()"></div>
+  <aside class="cart-drawer" [class.open]="carritoAbierto" aria-label="Carrito de compras">
+    <div class="cart-drawer-header">
+      <div class="cart-header-title">
+        <span class="drawer-icon">🛒</span>
+        <div>
+          <h3>Tu Pedido</h3>
+          <span class="drawer-count">{{ cantidadTotalCarrito }} producto(s) en orden</span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" (click)="toggleCarrito()" aria-label="Cerrar pedido">×</button>
+    </div>
+
+    <!-- Lista de Productos en el Carrito -->
+    <div class="cart-drawer-body">
+      <div *ngIf="carrito.length === 0" class="cart-empty-view">
+        <span class="cart-empty-icon">☕</span>
+        <h4>Tu carrito está esperando</h4>
+        <p>Aún no has agregado productos. Explora nuestra carta y elige tus favoritos.</p>
+        <button type="button" class="btn-primary btn-sm" (click)="toggleCarrito()">Ir al menú</button>
+      </div>
+
+      <div class="cart-items-list" *ngIf="carrito.length > 0">
+        <div class="cart-item-row" *ngFor="let item of carrito; let i = index">
+          <img [src]="item.imagen" [alt]="item.producto.nombre" class="cart-item-thumb">
+          <div class="cart-item-info">
+            <strong>{{ item.producto.nombre }}</strong>
+            <small class="cart-item-specs">
+              {{ item.tamano }} · Leche: {{ item.leche }}
+              <span *ngIf="item.notas"><br>Nota: {{ item.notas }}</span>
+            </small>
+            <div class="cart-item-controls">
+              <div class="item-qty-picker">
+                <button type="button" (click)="cambiarCantidad(i, -1)">-</button>
+                <span>{{ item.cantidad }}</span>
+                <button type="button" (click)="cambiarCantidad(i, 1)">+</button>
+              </div>
+              <span class="item-subtotal">Bs. {{ item.subtotal }}</span>
+              <button type="button" class="item-remove-btn" (click)="quitarDelCarrito(i)" title="Eliminar ítem">🗑</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer y Acciones del Carrito -->
+    <div class="cart-drawer-footer" *ngIf="carrito.length > 0">
+      <!-- Modalidad de Entrega -->
+      <div class="delivery-picker">
+        <label>Modalidad de atención:</label>
+        <div class="delivery-chips">
+          <button
+            type="button"
+            class="chip-delivery"
+            [class.active]="tipoEntrega === 'local'"
+            (click)="tipoEntrega = 'local'"
+          >
+            🍽 En Sala
+          </button>
+          <button
+            type="button"
+            class="chip-delivery"
+            [class.active]="tipoEntrega === 'llevar'"
+            (click)="tipoEntrega = 'llevar'"
+          >
+            🥡 Para Llevar
+          </button>
+          <button
+            type="button"
+            class="chip-delivery"
+            [class.active]="tipoEntrega === 'delivery'"
+            (click)="tipoEntrega = 'delivery'"
+          >
+            🛵 Delivery
+          </button>
+        </div>
+      </div>
+
+      <!-- Cupón de Descuento -->
+      <div class="coupon-box">
+        <div class="coupon-input-group">
+          <input
+            type="text"
+            [(ngModel)]="codigoCupon"
+            placeholder="Código de cupón (Ej. COFFEE2026)"
+          >
+          <button type="button" (click)="aplicarCupon()">Aplicar</button>
+        </div>
+        <small *ngIf="mensajeCupon" class="coupon-feedback" [class.success]="descuentoAplicado > 0">{{ mensajeCupon }}</small>
+      </div>
+
+      <!-- Totales -->
+      <div class="cart-summary-totals">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span>Bs. {{ subtotalCarrito }}</span>
+        </div>
+        <div class="summary-line discount-line" *ngIf="descuentoAplicado > 0">
+          <span>Descuento aplicado</span>
+          <span>-Bs. {{ descuentoAplicado }}</span>
+        </div>
+        <div class="summary-line total-line">
+          <strong>Total a pagar</strong>
+          <strong>Bs. {{ totalCarrito }}</strong>
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="cart-actions-column">
+        <button type="button" class="btn-whatsapp-order" (click)="pedirPorWhatsApp()">
+          <span>📱 Confirmar vía WhatsApp</span>
+        </button>
+        <button type="button" class="btn-confirm-order" (click)="confirmarPedido()">
+          <span>✓ Finalizar Pedido en Línea</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CONFIRMACIÓN EXITOSA DE PEDIDO -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" *ngIf="pedidoConfirmadoModal" (click)="cerrarModalConfirmacion()">
+    <div class="modal-dialog success-modal-dialog" (click)="$event.stopPropagation()">
+      <div class="success-badge">☕</div>
+      <h2>¡Pedido Recibido con Éxito!</h2>
+      <p class="order-id-label">Código de seguimiento: <strong>{{ ultimoPedidoId }}</strong></p>
+      <p class="success-copy">
+        Nuestros baristas han comenzado a preparar tu orden. Te esperamos en barra o te contactaremos al llegar tu delivery.
+      </p>
+
+      <div class="order-ticket-preview">
+        <div class="ticket-row" *ngFor="let item of carrito">
+          <span>{{ item.cantidad }}x {{ item.producto.nombre }} ({{ item.tamano }})</span>
+          <strong>Bs. {{ item.subtotal }}</strong>
+        </div>
+        <div class="ticket-divider"></div>
+        <div class="ticket-total-row">
+          <span>Total Pagado:</span>
+          <strong>Bs. {{ totalCarrito }}</strong>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" (click)="cerrarModalConfirmacion()">
+        Listo, disfrutar café ☕
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- CHATBOT CON BARISTA VIRTUAL (AI EXPERT) -->
+  <!-- ============================================== -->
   <div class="chat-widget">
     <section *ngIf="chatAbierto" class="chat-window" aria-label="Chat con el barista virtual">
       <header class="chat-header">
-        <div class="chat-avatar" aria-hidden="true">☕</div>
-        <div class="chat-title"><strong>Barista virtual</strong><span><i class="status-dot"></i> En línea · Gemma 3</span></div>
+        <div class="chat-avatar" aria-hidden="true">
+          <span>☕</span>
+        </div>
+        <div class="chat-title">
+          <strong>Barista Virtual · Café de Altura</strong>
+          <span><i class="status-dot"></i> Sabor de origen · En línea</span>
+        </div>
         <button type="button" class="chat-close" aria-label="Cerrar chat" (click)="chatAbierto = false">×</button>
       </header>
+
       <div #chatMessages class="chat-messages" aria-live="polite">
         <div *ngFor="let mensaje of mensajesChat" class="chat-message" [ngClass]="mensaje.role">
-          <span class="message-sender">{{ mensaje.role === 'assistant' ? 'BARISTA' : 'TÚ' }}</span>
+          <span class="message-sender">{{ mensaje.role === 'assistant' ? 'BARISTA VIRTUAL' : 'TÚ' }}</span>
           {{ mensaje.content }}
         </div>
-        <p *ngIf="cargandoRespuesta && !respuestaEnCurso" class="chat-status"><span class="typing-dots"><i></i><i></i><i></i></span> Conectando con el barista...</p>
+
+        <p *ngIf="cargandoRespuesta && !respuestaEnCurso" class="chat-status">
+          <span class="typing-dots"><i></i><i></i><i></i></span> El barista está preparando su recomendación...
+        </p>
+
         <div *ngIf="respuestaEnCurso" class="chat-message assistant streaming-response">
           <span class="message-sender">BARISTA · EN VIVO</span>
           {{ respuestaEnCurso }}<span class="stream-cursor" aria-hidden="true"></span>
         </div>
+
         <p *ngIf="errorChat" class="chat-error" role="alert">{{ errorChat }}</p>
+
+        <!-- Chips de Preguntas Frecuentes Rápidas -->
+        <div class="chat-suggestions-wrapper" *ngIf="!cargandoRespuesta">
+          <span class="suggestions-label">Preguntas rápidas:</span>
+          <div class="suggestions-scroll">
+            <button
+              type="button"
+              class="chip-suggestion"
+              *ngFor="let sug of sugerenciasChat"
+              (click)="enviarMensajeRapido(sug)"
+            >
+              {{ sug }}
+            </button>
+          </div>
+        </div>
       </div>
+
       <form class="chat-form" (ngSubmit)="enviarMensaje()">
         <input
           type="text"
           name="mensajeUsuario"
           [(ngModel)]="mensajeUsuario"
-          placeholder="Escribe tu mensaje..."
+          placeholder="Pregúntame sobre cafés, tuestes o maridajes..."
           aria-label="Mensaje para el barista"
           [disabled]="cargandoRespuesta"
         >
-        <button type="submit" aria-label="Enviar mensaje" [disabled]="cargandoRespuesta || !mensajeUsuario.trim()">↑</button>
+        <button
+          type="submit"
+          aria-label="Enviar mensaje"
+          [disabled]="cargandoRespuesta || !mensajeUsuario.trim()"
+        >
+          ↑
+        </button>
       </form>
-      <p class="chat-footnote">EL CAFÉ ES MEJOR CUANDO SE COMPARTE</p>
+      <p class="chat-footnote">CAFÉ DE ALTURA, SABOR DE ORIGEN · TUESTE ARTESANAL</p>
     </section>
-    <button type="button" class="chat-btn" [attr.aria-expanded]="chatAbierto" (click)="chatAbierto = !chatAbierto">
-      <span class="chat-button-icon" aria-hidden="true">{{ chatAbierto ? '×' : '✳' }}</span>
-      <span>{{ chatAbierto ? 'Cerrar chat' : 'Habla con el barista' }}</span>
+
+    <!-- Botón Flotante del Chat con Pulso -->
+    <button
+      type="button"
+      class="chat-btn"
+      [attr.aria-expanded]="chatAbierto"
+      (click)="chatAbierto = !chatAbierto"
+    >
+      <div class="chat-button-icon" aria-hidden="true">
+        <span>{{ chatAbierto ? '×' : '☕' }}</span>
+      </div>
+      <div class="chat-btn-labels">
+        <span class="chat-btn-main">{{ chatAbierto ? 'Cerrar chat' : 'Habla con el barista' }}</span>
+        <small class="chat-btn-sub" *ngIf="!chatAbierto">¿Te ayudamos a elegir?</small>
+      </div>
+      <span class="chat-online-indicator" aria-hidden="true"></span>
     </button>
   </div>
 </div>

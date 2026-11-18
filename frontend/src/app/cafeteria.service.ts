@@ -7,6 +7,12 @@ export interface Producto {
   nombre: string;
   descripcion?: string;
   precio: number;
+  categoria?: string;
+  imagen?: string;
+  popular?: boolean;
+  intensidad?: number;
+  notasCata?: string[];
+  origen?: string;
 }
 
 export interface Inicio {

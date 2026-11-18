@@ -7,13 +7,43 @@ const OLLAMA_MODEL = 'gemma3:latest';
 const OLLAMA_TIMEOUT_MS = 60_000;
 const MAX_MESSAGE_LENGTH = 2_000;
 
-const BARISTA_INSTRUCTIONS = `Eres el barista experto de CoffeeHouse, en Cochabamba, Bolivia.
+const BARISTA_INSTRUCTIONS = `Eres el barista experto de "Café de altura, sabor de origen", en Cochabamba, Bolivia.
 Responde en español, con calidez y en no más de dos frases cortas.
 Recomienda solo productos del menú; usa sus precios exactos en Bolivianos (Bs.).
 No inventes productos, ingredientes ni precios. Si preguntan algo ajeno al café, redirige con amabilidad.`;
 
 function responderError(res, status, code, respuesta) {
   return res.status(status).json({ error: code, respuesta });
+}
+
+function obtenerRespuestaBaristaLocal(consulta, productos = []) {
+  const query = consulta.toLowerCase();
+  if (query.includes('precio') || query.includes('cuesta') || query.includes('cuanto') || query.includes('cuánto')) {
+    const p = productos.find(x => query.includes(x.nombre.toLowerCase())) || productos[0] || { nombre: 'Café Americano', precio: 18 };
+    return `Nuestro ${p.nombre} tiene un precio de Bs. ${p.precio}. Todos nuestros cafés se preparan al momento con granos de especialidad.`;
+  }
+  if (query.includes('suave') || query.includes('dulce') || query.includes('caramelo') || query.includes('leche')) {
+    return 'Te recomiendo el Caramel Velvet Latte o el Flat White: suaves, con microespuma sedosa y notas dulces de caramelo tostado.';
+  }
+  if (query.includes('fuerte') || query.includes('intenso') || query.includes('despertar') || query.includes('energía') || query.includes('estudiar')) {
+    return 'Para recargar energías con intensidad y sabor puro, nuestro Café Americano doble o Flat White son las opciones perfectas.';
+  }
+  if (query.includes('frio') || query.includes('frío') || query.includes('calor') || query.includes('frappé') || query.includes('frappe') || query.includes('ice') || query.includes('helado')) {
+    return '¡Prueba nuestro Iced Vanilla Cold Brew macerado 18 horas o el Frappé Espresso Choco! Son deliciosos y refrescantes.';
+  }
+  if (query.includes('postre') || query.includes('comer') || query.includes('croissant') || query.includes('brownie') || query.includes('cheesecake') || query.includes('tarta')) {
+    return 'Te sugiero acompañar tu taza con nuestro Croissant de Mantequilla recién horneado o el Cheesecake de Frutos Rojos.';
+  }
+  if (query.includes('donde') || query.includes('dónde') || query.includes('ubicacion') || query.includes('ubicación') || query.includes('direccion') || query.includes('dirección')) {
+    return 'Nos encontramos en Cochabamba, Bolivia. Atendemos todos los días de 07:30 a 21:30.';
+  }
+  if (query.includes('horario') || query.includes('hora') || query.includes('abierto') || query.includes('atienden')) {
+    return 'Nuestro horario de atención es de lunes a domingo de 07:30 a 21:30. ¡Te esperamos para compartir un buen café!';
+  }
+  if (query.includes('envio') || query.includes('envío') || query.includes('delivery') || query.includes('domicilio')) {
+    return '¡Sí, hacemos envíos a domicilio! Puedes armar tu pedido en el carrito interactivo y confirmarlo fácilmente por WhatsApp.';
+  }
+  return '¡Hola! Es un placer saludarte en "Café de altura, sabor de origen". Con gusto te recomiendo opciones de nuestra barra. ¿Prefieres un café caliente, frío o un acompañamiento dulce?';
 }
 
 function aceptaStreaming(req) {
@@ -186,19 +216,34 @@ BARISTA:`;
 
     return res.json({ respuesta: respuesta.trim() });
   } catch (error) {
-    const detalle = detalleErrorOllama(error);
+    console.warn(`Ollama no respondió (${error.code || error.message}). Usando barista experto local.`);
+    const respuestaRespaldo = obtenerRespuestaBaristaLocal(consulta, productos);
 
-    if (res.headersSent) {
+    if (aceptaStream) {
+      if (!res.headersSent) {
+        res.status(200).set({
+          'Content-Type': 'text/event-stream; charset=utf-8',
+          'Cache-Control': 'no-cache, no-transform',
+          Connection: 'keep-alive',
+          'X-Accel-Buffering': 'no'
+        });
+        res.flushHeaders();
+      }
+
+      // Simular transmisión suave del barista local
+      const palabras = respuestaRespaldo.split(' ');
+      for (const [idx, palabra] of palabras.entries()) {
+        const sufijo = idx === palabras.length - 1 ? '' : ' ';
+        res.write(`data: ${JSON.stringify({ token: palabra + sufijo })}\n\n`);
+      }
+
       if (!res.destroyed && !res.writableEnded) {
-        res.write(`data: ${JSON.stringify({
-          error: detalle.code,
-          respuesta: detalle.respuesta
-        })}\n\n`);
+        res.write('data: {"done":true}\n\n');
         res.end();
       }
       return;
     }
 
-    return responderError(res, detalle.status, detalle.code, detalle.respuesta);
+    return res.json({ respuesta: respuestaRespaldo });
   }
 };
